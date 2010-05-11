@@ -12,6 +12,33 @@
 
 #define LINKLIST(o) ((o)->op_next ? (o)->op_next : linklist((OP*)o))
 
+#ifndef linklist
+# define linklist(o) THX_linklist(aTHX_ o)
+STATIC OP *THX_linklist(pTHX_ OP *o) {
+  OP *first;
+  if(o->op_next)
+    return o->op_next;
+  first = cUNOPo->op_first;
+  if (first) {
+    OP *kid;
+    o->op_next = LINKLIST(first);
+    kid = first;
+    for (;;) {
+      if (kid->op_sibling) {
+   kid->op_next = LINKLIST(kid->op_sibling);
+   kid = kid->op_sibling;
+      } else {
+   kid->op_next = o;
+   break;
+      }
+    }
+  } else {
+    o->op_next = o;
+  }
+  return o->op_next;
+}
+#endif /* !linklist */
+
 STATIC OP *lift_cb(pTHX_ OP *o, CV *cv, void *user_data) {
   dSP;
   SV *sv;

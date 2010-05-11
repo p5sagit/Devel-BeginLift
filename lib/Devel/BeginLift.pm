@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use 5.008001;
 
-our $VERSION = 0.001002;
+our $VERSION = 0.001003;
 
 use vars qw(%lift);
 use base qw(DynaLoader);
