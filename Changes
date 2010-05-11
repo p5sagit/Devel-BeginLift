@@ -1,5 +1,8 @@
 Changes for Devel-BeginLift
 
+0.001003
+  - Applied path from rt #55384 (thanks zefram) to fix perl 5.12+
+
 0.001002
   - Depend on B::Hooks::OP::Check::EntersubForCV 0.03 to make op injection work
     reliably.
